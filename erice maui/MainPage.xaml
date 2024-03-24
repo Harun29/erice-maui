@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="erice_maui.MainPage">
+    <StackLayout Padding="20">
+        <Label Text="Spol:"
+               FontSize="Medium"/>
+        <Picker x:Name="GenderPicker"
+                Title="Select gender">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Musko</x:String>
+                    <x:String>Zensko</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Label Text="Unesite vrijednost kolesterola:"
+               FontSize="Medium"
+               Margin="0,10,0,0"/>
+        <Entry x:Name="CholesterolEntry"
+               Placeholder="Enter cholesterol level"
+               Keyboard="Numeric"
+               Margin="0,5,0,0"/>
+        <Label Text="Unesite godine:"
+               FontSize="Medium"
+               Margin="0,10,0,0"/>
+        <Entry x:Name="AgeEntry"
+               Placeholder="Enter age"
+               Keyboard="Numeric"
+               Margin="0,5,0,0"/>
+        <Label Text="Unesite sbp vrijednost:"
+               FontSize="Medium"
+               Margin="0,10,0,0"/>
+        <Entry x:Name="SbpEntry"
+               Placeholder="Enter SBP value"
+               Keyboard="Numeric"
+               Margin="0,5,0,0"/>
+        <Label Text="Da li je pacijent dijabetičar?"
+               FontSize="Medium"
+               Margin="0,10,0,0"/>
+        <Switch x:Name="DiabeticSwitch"
+                Margin="0,5,0,0"/>
+        <Label Text="Da li je pacijent pušač?"
+               FontSize="Medium"
+               Margin="0,10,0,0"/>
+        <Switch x:Name="SmokerSwitch"
+                Margin="0,5,0,0"/>
+        <Button Text="Calculate"
+                Margin="0,20,0,0"
+                Clicked="OnCalculateClicked"/>
+    </StackLayout>
+</ContentPage>
+
