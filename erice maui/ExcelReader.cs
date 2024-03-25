@@ -5,11 +5,11 @@ using OfficeOpenXml;
 
 namespace erice
 {
-    class ExcelReader
+    class ExcelReader : IDisposable
     {
-        string path = "";
-        ExcelPackage excelPackage;
-        ExcelWorksheet worksheet;
+        private readonly string path;
+        private ExcelPackage excelPackage;
+        private ExcelWorksheet worksheet;
 
         public ExcelReader(string resourceName, int sheet)
         {
@@ -17,14 +17,11 @@ namespace erice
             {
                 this.path = resourceName;
 
-                // Debugging: Print out all loaded resource names
-                var assembly = Assembly.GetExecutingAssembly();
-                var allResourceNames = assembly.GetManifestResourceNames();
-                foreach (var name in allResourceNames)
-                {
-                    Console.WriteLine("Loaded resource: " + name);
-                }
+                // Set license context
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
+                // Load the Excel file from embedded resource
+                var assembly = Assembly.GetExecutingAssembly();
                 using (var stream = assembly.GetManifestResourceStream(resourceName))
                 {
                     if (stream == null)
@@ -32,35 +29,39 @@ namespace erice
                         throw new Exception("Resource stream is null.");
                     }
 
-                    Console.WriteLine("Stream length: " + stream.Length); // Debugging: Print stream length
-
                     // Rewind the stream position to the beginning
                     stream.Seek(0, SeekOrigin.Begin);
 
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        stream.CopyTo(memoryStream);
-                        excelPackage = new ExcelPackage(memoryStream);
-                    }
-
-                    if (excelPackage == null)
-                    {
-                        throw new Exception("ExcelPackage is null after initialization.");
-                    }
+                    excelPackage = new ExcelPackage(stream);
                 }
+
+                if (excelPackage == null)
+                {
+                    throw new Exception("ExcelPackage is null after initialization.");
+                }
+
+                // Ensure the sheet index is valid
+                if (sheet < 0 || sheet >= excelPackage.Workbook.Worksheets.Count)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(sheet), "Invalid sheet index.");
+                }
+
                 worksheet = excelPackage.Workbook.Worksheets[sheet];
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred while initializing Excel application: " + ex.Message);
+                throw; // Rethrow the exception to indicate initialization failure
             }
         }
 
-
-
-
         public string ReadCell(int row, int column)
         {
+            if (worksheet == null)
+            {
+                throw new InvalidOperationException("Worksheet is not initialized.");
+            }
+
             if (worksheet.Cells[row, column].Value != null)
             {
                 return worksheet.Cells[row, column].Value.ToString();
@@ -71,15 +72,20 @@ namespace erice
             }
         }
 
-        public void Close()
+        public void Dispose()
         {
-            if (excelPackage != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                excelPackage.Dispose();
-            }
-            else
-            {
-                Console.WriteLine("excelPackage is null. Cannot dispose.");
+                if (excelPackage != null)
+                {
+                    excelPackage.Dispose();
+                }
             }
         }
     }

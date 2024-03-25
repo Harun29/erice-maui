@@ -38,11 +38,11 @@ namespace erice_maui
 
             if (spol == "Musko")
             {
-                sheet = 2;
+                sheet = 1;
             }
             else
             {
-                sheet = 1;
+                sheet = 0;
             }
             ExcelReader excel = null;
 
@@ -69,14 +69,14 @@ namespace erice_maui
                                     reading = 3;
                                     break;
                                 }
-                                else if ((age < 49 && spol == "Z") && (reading == 1))
+                                else if ((age < 49 && spol == "Zensko") && (reading == 1))
                                 {
                                     start = 20;
                                     finish = 23;
                                     reading = 3;
                                     break;
                                 }
-                                else if ((age < 39 && spol == "M") && (reading == 1))
+                                else if ((age < 39 && spol == "Musko") && (reading == 1))
                                 {
                                     start = 20;
                                     finish = 23;
@@ -196,7 +196,7 @@ namespace erice_maui
             {
                 if (excel != null)
                 {
-                    excel.Close();
+                    excel.Dispose();
                 }
             }
 
