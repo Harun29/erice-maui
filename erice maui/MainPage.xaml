@@ -6,7 +6,7 @@
         <Label Text="Spol:"
                FontSize="Medium"/>
         <Picker x:Name="GenderPicker"
-                Title="Select gender">
+                Title="Izaberite spol">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Musko</x:String>
@@ -18,21 +18,21 @@
                FontSize="Medium"
                Margin="0,10,0,0"/>
         <Entry x:Name="CholesterolEntry"
-               Placeholder="Enter cholesterol level"
+               Placeholder="Kolesterol"
                Keyboard="Numeric"
                Margin="0,5,0,0"/>
         <Label Text="Unesite godine:"
                FontSize="Medium"
                Margin="0,10,0,0"/>
         <Entry x:Name="AgeEntry"
-               Placeholder="Enter age"
+               Placeholder="Godine"
                Keyboard="Numeric"
                Margin="0,5,0,0"/>
         <Label Text="Unesite sbp vrijednost:"
                FontSize="Medium"
                Margin="0,10,0,0"/>
         <Entry x:Name="SbpEntry"
-               Placeholder="Enter SBP value"
+               Placeholder="SBP"
                Keyboard="Numeric"
                Margin="0,5,0,0"/>
         <Label Text="Da li je pacijent dijabetičar?"
@@ -45,7 +45,7 @@
                Margin="0,10,0,0"/>
         <Switch x:Name="SmokerSwitch"
                 Margin="0,5,0,0"/>
-        <Button Text="Calculate"
+        <Button Text="Izračunaj"
                 Margin="0,20,0,0"
                 Clicked="OnCalculateClicked"/>
     </StackLayout>

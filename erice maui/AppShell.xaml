@@ -8,7 +8,7 @@
     Title="erice_maui">
 
     <ShellContent
-        Title="Home"
+        Title="Erice calculator"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
