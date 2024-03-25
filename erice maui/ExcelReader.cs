@@ -40,12 +40,6 @@ namespace erice
                     throw new Exception("ExcelPackage is null after initialization.");
                 }
 
-                // Ensure the sheet index is valid
-                if (sheet < 0 || sheet >= excelPackage.Workbook.Worksheets.Count)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(sheet), "Invalid sheet index.");
-                }
-
                 worksheet = excelPackage.Workbook.Worksheets[sheet];
             }
             catch (Exception ex)
